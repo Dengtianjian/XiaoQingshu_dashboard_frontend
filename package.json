@@ -1,0 +1,22 @@
+{
+  "name": "Qongcong_dashboard_frontend",
+  "version": "1.0.0",
+  "description": "青葱 后台 前端",
+  "author": "DengTianjian",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "nuxt": "^2.0.0",
+    "element-ui": "^2.4.11",
+    "@nuxtjs/dotenv": "^1.4.0"
+  },
+  "devDependencies": {
+    "less": "^3.11.1",
+    "less-loader": "^6.1.0"
+  }
+}
