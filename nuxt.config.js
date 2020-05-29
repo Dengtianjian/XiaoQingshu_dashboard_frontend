@@ -15,6 +15,10 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  server:{
+    port:88,
+    host:"192.168.1.3"
+  },
   router:{
 
   },
@@ -33,7 +37,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    "@/plugins/http"
   ],
   /*
   ** Nuxt.js dev-modules
