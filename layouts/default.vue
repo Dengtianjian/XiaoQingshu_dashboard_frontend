@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-if="loaded">
     <el-container>
       <el-header>
         <el-row>
@@ -53,11 +53,27 @@
 export default {
   name: "Home",
   components: {},
-  middleware:[
-    "auth"
-  ],
+  // middleware:[
+  //   "auth"
+  // ],
+  async beforeMount() {
+    if(localStorage.token){
+      let token=localStorage.token;
+      await this.$http.post("user","verify",{
+        token
+      }).then(res=>{
+        console.log(res);
+      });
+    }
+    if (!this.$store.state.user || !this.$store.state.user.token || !this.$store.state.user.user_id) {
+      this.$router.replace("/user/signin");
+      return;
+    }
+    this.loaded=true;
+  },
   data() {
     return {
+      loaded:false,
       navigator: [
         {
           path: "/",
