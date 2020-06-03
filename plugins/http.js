@@ -5,9 +5,6 @@ Vue.prototype.$http = {
     return new Promise((resolve, reject) => {
       Object.assign(params, {
         mode: "cors",
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
         method
       });
 
@@ -17,6 +14,12 @@ Vue.prototype.$http = {
         })
         .then(res => {
           if (res.statusCode == 200) {
+            if(res.token){
+              let localToken=localStorage.token;
+              if(!localToken||localToken&&res.token!=localToken){
+                localStorage.token=res.token;
+              }
+            }
             resolve(res["data"]);
           } else {
             reject(res);
@@ -25,8 +28,15 @@ Vue.prototype.$http = {
     });
   },
   post(module, method, data, params = {}) {
+    let headers=new Headers();
+    // headers.append("content-type","multipart/formdata");
+    let body=new FormData();
+    for(let key in data){
+      body.append(key,data[key]);
+    }
     params = Object.assign(params, {
-      body: data
+      headers,
+      body
     });
     return this.request(
       `${process.env.BACKEND_URL}?module=${module}&method=${method}`,
