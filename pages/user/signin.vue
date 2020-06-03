@@ -39,13 +39,17 @@ export default {
   },
   methods: {
     signinSubmit(e) {
-      this.$http.get("user","signin",{
-        username:"admin"
-      }).then(res=>{
-        console.log(res);
-      }).catch(err=>{
-        console.log(err);
-      })
+      this.$http
+        .post("user", "signin", {
+          username: "admin",
+          password: 123456
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
