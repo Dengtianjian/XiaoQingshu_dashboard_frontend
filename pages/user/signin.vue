@@ -1,5 +1,5 @@
 <template>
-  <div id="signIn">
+  <div id="signIn" v-if="pageLoaded">
     <el-form
       class="signin-form"
       ref="form"
@@ -28,13 +28,20 @@
 <script>
 export default {
   layout: "pure",
-  created() {},
+  beforeMount() {
+    if(localStorage.token){
+      this.$router.replace("/");
+      return;
+    }
+    this.pageLoaded=true;
+  },
   data() {
     return {
       signinForm: {
         username: "",
         password: ""
-      }
+      },
+      pageLoaded:false
     };
   },
   methods: {
