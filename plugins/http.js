@@ -8,16 +8,24 @@ Vue.prototype.$http = {
         method
       });
 
+      if(localStorage.token){
+        if(method==="POST"){
+          params['body']['token']=localStorage.token;
+        }else{
+          url+="&token="+localStorage.token;
+        }
+      }
+
       fetch(url, params)
         .then(res => {
           return res.json();
         })
         .then(res => {
           if (res.statusCode == 200) {
-            if(res.token){
-              let localToken=localStorage.token;
-              if(!localToken||localToken&&res.token!=localToken){
-                localStorage.token=res.token;
+            if (res.token) {
+              let localToken = localStorage.token;
+              if (!localToken || (localToken && res.token != localToken)) {
+                localStorage.token = res.token;
               }
             }
             resolve(res["data"]);
@@ -28,11 +36,11 @@ Vue.prototype.$http = {
     });
   },
   post(module, method, data, params = {}) {
-    let headers=new Headers();
+    let headers = new Headers();
     // headers.append("content-type","multipart/formdata");
-    let body=new FormData();
-    for(let key in data){
-      body.append(key,data[key]);
+    let body = new FormData();
+    for (let key in data) {
+      body.append(key, data[key]);
     }
     params = Object.assign(params, {
       headers,
@@ -45,9 +53,9 @@ Vue.prototype.$http = {
     );
   },
   get(module, method, data, params) {
-    let str="";
-    for(let key in data){
-      str+=`&${key}=${data[key]}`;
+    let str = "";
+    for (let key in data) {
+      str += `&${key}=${data[key]}`;
     }
     return this.request(
       `${process.env.BACKEND_URL}?module=${module}&method=${method}${str}`,
