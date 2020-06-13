@@ -5,7 +5,7 @@ export default {
     let month = date.getMonth() + 1;
     month = month > 9 ? month : `0${month}`;
     let day = date.getDate();
-    day=day>9?day:`0${day}`;
+    day = day > 9 ? day : `0${day}`;
     let hours = date.getHours();
     hours = hours > 9 ? hours : `0${hours}`;
     let minutes = date.getMinutes();
@@ -19,5 +19,11 @@ export default {
     format = format.replace(/i/, minutes);
     format = format.replace(/s/, seconds);
     return format;
+  },
+  getType(variable) {
+    let type = Object.prototype.toString.call(variable);
+    type = type.split(" ")[1].replace("]","");
+
+    return type;
   }
-}
+};
