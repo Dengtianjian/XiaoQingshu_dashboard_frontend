@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import Tools from "../functions/tools";
 export default {
   name: "Home",
   components: {},
@@ -96,6 +97,11 @@ export default {
       this.$router.replace("/user/signin");
       return;
     }
+
+    await this.$http.get("common","init").then(initData=>{
+      this.$store.commit("user/updateUserGroup",initData['userGroup']);
+    });
+
     this.loaded = true;
   },
   data() {
@@ -121,13 +127,27 @@ export default {
               path: "/user",
               title: "管理",
               icon: "qcdb qcdb-friendfill"
+            },{
+              path: "/user/add",
+              title: "添加",
+              icon: "el-icon-ship"
+            },{
+              path: "/user/group",
+              title: "用户组",
+              icon: "el-icon-attract"
             }
           ]
         },
         {
           path: "/post",
           title: "帖子",
-          children: []
+          children: [
+            {
+              path: "/post/publish",
+              title: "发布",
+              icon: "el-icon-edit-outline"
+            }
+          ]
         },
         {
           path: "/school",
@@ -200,11 +220,6 @@ export default {
       }
       return [];
     }
-  },
-  watch: {
-    "$route.name"() {
-      console.log(this.$route);
-    }
   }
 };
 </script>
@@ -226,7 +241,7 @@ body {
   height: 60px;
 }
 .page-container {
-  margin-top: 20px;
+  margin: 20px 0 100px;
 }
 .main-container {
   padding: 10px;
