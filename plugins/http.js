@@ -8,12 +8,15 @@ Vue.prototype.$http = {
         method
       });
 
-      if(localStorage.token){
-        if(method==="POST"){
-          params['body']['token']=localStorage.token;
-        }else{
-          url+="&token="+localStorage.token;
+      if (localStorage.token) {
+        if (method === "POST") {
+          if (!params["body"].get("token")) {
+            params["body"].append("token", localStorage.token);
+          }
+        } else {
+          url += "&token=" + localStorage.token;
         }
+        console.log(params["body"]);
       }
 
       fetch(url, params)
