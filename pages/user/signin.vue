@@ -48,11 +48,11 @@ export default {
     signinSubmit(e) {
       this.$http
         .post("user", "signin", {
-          username: "admin",
-          password: 123456
+          username: this.signinForm.username,
+          password: this.signinForm.password
         })
         .then(res => {
-          console.log(res);
+          this.$router.replace("/");
         })
         .catch(err => {
           console.log(err);
